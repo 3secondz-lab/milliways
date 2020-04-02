@@ -263,7 +263,8 @@ $ rosbag play [filename]
 <br>
 이 상태에서 다른 터미널을 띄워 rostopic list 를 해 보면, play 되는 동안 기록된 topic 목록이 나열되는 것을 확인할 수 있다.
 <br>
-#### 6.2 GUI
+
+### 6.2 GUI
 
 터미널 창에서 아래 명령을 실행하자.
 
