@@ -8,6 +8,7 @@ ROS 설치는 매뉴얼이 굉장히 잘 되어 있는 편이며 특히 Ubuntu�
 Ubuntu 18.04.4 에 Anaconda3 을 설치하고, 기본 디렉토리는 기본값으로 둔다.
 그러면 파이썬은 /home/[사용자명]/anaconda3에 설치될 것.
 <br>
+
 ## 1\. Installation
 
 ### 1.1. 우분투 리퐈쥐토뤼(repository) 설정
@@ -28,6 +29,7 @@ sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31
 
 apt update 후 desktop-full install 로 설치한다.
 <br>
+
 ```
 sudo apt update
 sudo apt install ros-melodic-desktop-full
@@ -66,8 +68,9 @@ rosdep update
 <br>
 다음으로 튜토리얼로 넘어가자.
 <br>
-## 2\. 환경 관리
 
+## 2\. 환경 관리
+<br>
 Managing your environment 라고 했지만 우리는 단일 환경만 쓸 것이고 그나마도 자동 활성화를 켰으므로(1.5), 무시해도 된다. 이미 1장에서 다 했다.
 
 ## 3\. ROS 작업 공간 생성
@@ -92,10 +95,12 @@ $ catkin_make -DPYTHON_EXECUTABLE=/home/ys/anaconda3/bin/python3
 <br>
 확실히 하기 위하여, 우리가 어떤 파이썬을 사용하고 있는지 확인하는 방법은 아래와 같다.
 <br>
+
 ```
 $ which python3
 /home/ys/anaconda3/bin/python3
 ```
+
 <br>
 이제, catkin\_ws 디렉토리는 워크스페이스가 되었다. 앞으로는 catkin\_make 만 해도 src 아래에 생성된 우리의 프로젝트들이 빌드될 것이다.
 
@@ -108,15 +113,18 @@ source ~/.bashrc
 <br>
 지금까지 과정이 제대로 되었다면 아래 명령을 입력하여 확인해 볼 수 있다.
 <br>
+
 ```
 $ echo $ROS_PACKAGE_PATH
 /home/ys/catkin_ws/src:/opt/ros/melodic/share
 ```
+
 <br>
 이상의 과정 (2장, 3장) 은 [https://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment](https://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment) 의 내용을 우리의 실정에 맞게 기록한 내용이다.
 
 이제 해당 링크 맨 아래의 "ROS file system tutorial" 로 가서 심화 학습을 해 보아도 좋겠으나, 랩탑에서 간단히 해 볼 수 있는 예제를 돌려서 ROS가 제대로 설치 및 구동되고 있는지 확인해 보자.
 <br>
+
 ## 4\. Simple ROS node: usb\_cam
 
 usb\_cam은 ROS에서 usb webcam (정확히는 V4L 장비 전체)들을 구동해 볼 수 있는 패키지이다.
@@ -152,9 +160,11 @@ $ roscore
 <br>
 이제, 기존 창에서 roslaunch를 이용하여 실행해 보자. 일단은 따라 써 보자.
 <br>
+
 ```
 $ roslaunch usb_cam usb_cam-test.launch
 ```
+
 <br>
 새 창으로 웹캠 이미지가 보인다면 성공이다.
 
@@ -208,6 +218,7 @@ $ rostopic echo /usb_cam/camera_info
 <br>
 아마 타임스탬프, 시퀀스 넘버, 해상도와 카메라 모델, (0으로 가득한) roi 등을 방출할 것이다.
 <br>
+
 ```
 $ rostopic echo /usb_cam/image_raw
 ```
@@ -234,6 +245,7 @@ average rate: 29.930
 min: 0.031s max: 0.040s std dev: 0.00206s window: 88
 ```
 <br>
+
 ## 6\. rosbag: topic의 기록 및 재생
 
 아마 뷰를 개발하기 위해서 모든 센서를 다 켜고 차(혹은 시뮬레이터)를 직접 타고 데이터를 수집해야 한다면 그것만한 고역이 없을 것이다.
@@ -261,4 +273,5 @@ $ rqt_bag
 그러면 GUI 가 열리는데, 여기서 "열기" 버튼을 이용하여 bag 파일을 열면 bag 파일의 재생, loop 등이 가능하다.
 
 <br>
-\<To be continued>
+
+To be continued...
