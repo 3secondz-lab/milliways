@@ -154,6 +154,7 @@ $ catkin_make
 터미널을 하나 더 열어서, roscore 를 실행하자. roscore는 저그 오버마인드 같은 존재이다.
 
 <br>
+
 ```
 $ roscore
 ```
