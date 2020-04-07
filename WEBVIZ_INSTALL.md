@@ -96,9 +96,11 @@ Sample rosbag의 경우 아래 데이터들이 저장되어 있다.
 
 접속 후 원하는 패널을 오른쪽 상단의 [+] 버튼을 이용해 추가 한 뒤, 원하는 topic을 선택하면 visualization이 가능하다.
 
-사용 방법은 아래 동영상을 참고하면 된다.
+사용 방법은 아래 동영상을 참고하면 된다 (Click).
 
-{% include webviz_tutorial_video.html id="qd_d_f2fYuU" %}
+
+
+[![Webviz Simple Demo](http://img.youtube.com/vi/qd_d_f2fYuU/0.jpg)](https://youtu.be/uLR1RNqqd_d_f2fYuUJ1Mw?t=0s)
 
 
 
