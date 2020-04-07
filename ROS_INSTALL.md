@@ -2,7 +2,9 @@
 
 ROS 설치는 매뉴얼이 굉장히 잘 되어 있는 편이며 특히 Ubuntu에 설치하는 건 기본적으로 ROS Wiki ( [https://wiki.ros.org/melodic/Installation/Ubuntu](https://wiki.ros.org/melodic/Installation/Ubuntu) ) 를 따라가면 된다.
 이 문서는 2020년 4월 1일 기준 위키 매뉴얼에 대한 약간의 부연 및 우리를 위한 팁을 기록한다.
-<br>
+
+Updated 4/7: catkin_pkg error 해결
+
 ## 0\. Pre\-installation
 <br>
 Ubuntu 18.04.4 에 Anaconda3 을 설치하고, 기본 디렉토리는 기본값으로 둔다.
@@ -67,7 +69,7 @@ rosdep update
 다음으로 튜토리얼로 넘어가자.
 <br>
 ## 2\. 환경 관리
-
+<br>
 Managing your environment 라고 했지만 우리는 단일 환경만 쓸 것이고 그나마도 자동 활성화를 켰으므로(1.5), 무시해도 된다. 이미 1장에서 다 했다.
 
 ## 3\. ROS 작업 공간 생성
@@ -84,7 +86,16 @@ $ cd ~/catkin_ws/                //  catkin_ws 로 이동
 ROS는 현재 ROS2 버전을 준비하고 있지만 ROS1은 굉장히 오래전에 만들어졌고 Python 2 기반이다.
 다행히 높으신(?) 분들이 각성해서 이제 Python3도 지원을 슬슬 시작하고 있으니, 우리 workspace 상에서 python3.7을 쓰도록 해 주자.
 
-**여기가 공식 튜토리얼과 다른 부분이다. 우리는 아나콘다에 딸려온 파이썬3을 쓸 것이므로 경로를 아래와 같이 해 준다(ys는 필자의 홈 디렉토리이므로 바꿔준다).**
+**여기가 공식 튜토리얼과 다른 부분이다.**
+
+먼저 catkin\_pkg를 설치하여 catkin\_make가 동작할 수 있도록 한다.
+
+<br>
+```
+$ pip install catkin_pkg
+```
+<br>
+****우리는 아나콘다에 딸려온 파이썬3을 쓸 것이므로 경로를 아래와 같이 해 준다(ys는 필자의 홈 디렉토리이므로 바꿔준다).****
 <br>
 ```
 $ catkin_make -DPYTHON_EXECUTABLE=/home/ys/anaconda3/bin/python3
@@ -250,7 +261,7 @@ $ rosbag play [filename]
 <br>
 이 상태에서 다른 터미널을 띄워 rostopic list 를 해 보면, play 되는 동안 기록된 topic 목록이 나열되는 것을 확인할 수 있다.
 <br>
-#### 6.2 GUI
+### 6.2 GUI
 
 터미널 창에서 아래 명령을 실행하자.
 
@@ -261,4 +272,5 @@ $ rqt_bag
 그러면 GUI 가 열리는데, 여기서 "열기" 버튼을 이용하여 bag 파일을 열면 bag 파일의 재생, loop 등이 가능하다.
 
 <br>
-\<To be continued>
+<br>
+To be continued...
