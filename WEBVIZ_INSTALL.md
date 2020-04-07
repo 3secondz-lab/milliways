@@ -98,9 +98,7 @@ Sample rosbag의 경우 아래 데이터들이 저장되어 있다.
 
 사용 방법은 아래 동영상을 참고하면 된다.
 
-
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/qd_d_f2fYuU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% include webviz_tutorial_video.html id="qd_d_f2fYuU" %}
 
 
 
