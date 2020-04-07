@@ -3,7 +3,7 @@
 ROS 설치는 매뉴얼이 굉장히 잘 되어 있는 편이며 특히 Ubuntu에 설치하는 건 기본적으로 ROS Wiki ( [https://wiki.ros.org/melodic/Installation/Ubuntu](https://wiki.ros.org/melodic/Installation/Ubuntu) ) 를 따라가면 된다.
 이 문서는 2020년 4월 1일 기준 위키 매뉴얼에 대한 약간의 부연 및 우리를 위한 팁을 기록한다.
 
-Updated 4/7
+Updated 4/7: catkin_pkg error 해결
 
 ## 0\. Pre\-installation
 <br>
