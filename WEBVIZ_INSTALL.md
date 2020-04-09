@@ -88,9 +88,9 @@ rosbag play의 -l 옵션을 통해 데이터를 반복하여 재생 할 수 있�
 
 Sample rosbag의 경우 아래 데이터들이 저장되어 있다.
 
-* /test_msg1 : std_msgs/Float64MultiArray
-* /test_msg2 : assetto_corsa/ACRaw (Custom message)
-* /test_msg3 : sensor_msgs/Image
+* /ac_pub/ACRaw : assetto_corsa/ACRaw (Custom message)
+* /test_msg/float_vals : std_msgs/Float64MultiArray
+* /test_msg/image : sensor_msgs/Image
 
 모든 과정이 끝난 후 웹 브라우저 (Chrome 또는 Firefox)의 http://localhost:8080/app 로 Webviz 접속이 가능하다.
 
@@ -100,12 +100,4 @@ Sample rosbag의 경우 아래 데이터들이 저장되어 있다.
 
 
 
-[![Webviz Simple Demo](http://img.youtube.com/vi/qd_d_f2fYuU/0.jpg)](https://youtu.be/qd_d_f2fYuU?t=0s)
-
-
-
-# TODO
-
-현재 ROS 기본 Message의 경우 이상 없이 확인 가능하나, Custom message의 경우 확인이 불가능하다.
-
-따라서 Custom message support가 추가되어야 한다.
+[![Webviz Simple Demo](http://img.youtube.com/vi/a7SofR8oR9w/0.jpg)](https://youtu.be/a7SofR8oR9w?t=0s)
