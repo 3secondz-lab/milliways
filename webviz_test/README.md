@@ -3,11 +3,11 @@ ROS Dynamic Parameter Configuration Tutorial
 
 # 1. Objective
 
-본 Tutorial을 통해 dynamic_reconfigure package를 이용한 dynamic parameter configuration 방법을 확인한다. 이를 통해 Webviz를 통한 기능 구현과 관련된 issue도 정리한다.
+본 Tutorial을 통해 dynamic_reconfigure package를 이용한 dynamic parameter configuration 방법을 확인한다.
 
 # 2. Prerequisite
 
-본 Repository의 [ROS_INSTALL.md](ROS_INSTALL.md) 및 [WEBVIZ_INSTALL.md](WEBVIZ_INSTALL.md)를 통한 ROS 및 Javascript support, Webviz 환경이 준비되었다고 가정한다.
+본 Repository의 [ROS_INSTALL.md](../ROS_INSTALL.md) 및 [WEBVIZ_INSTALL.md](../WEBVIZ_INSTALL.md)를 통한 ROS 및 Javascript support, Webviz 환경이 준비되었다고 가정한다.
 
 ## 2.1. dynamic_reconfigure package 설치
 
@@ -97,7 +97,7 @@ gen.add("size", int_t, 0, "Size parameter with enum", 0, 0, 4, edit_method=size_
 exit(gen.generate(PACKAGE, "webviz_test_params", "WebvizTestParams"))
 ```
 
-cfg 파일 작성 후, [CMakeList.txt](CMakeList.txt) 파일에 아래와 같은 옵션을 추가해 준다.
+cfg 파일 작성 후, [CMakeLists.txt](CMakeLists.txt) 파일에 아래와 같은 옵션을 추가해 준다.
 
 ```
 find_package(catkin REQUIRED dynamic_reconfigure)
