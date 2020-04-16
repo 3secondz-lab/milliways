@@ -10,9 +10,6 @@ import sys
 sys.path.insert(0, "/home/rnd/catkin_ws/install/lib/python3/dist-packages")
 
 import rospy
-import std_msgs
-from math import pi as M_PI
-from math import sin
 
 from dynamic_reconfigure.server import Server
 from webviz_test.cfg import WebvizTestParamsConfig
