@@ -1,1 +1,6 @@
 .unotes/
+.cache
+.DS_Store
+jest.json
+yarn-error.log
+/node_modules/
