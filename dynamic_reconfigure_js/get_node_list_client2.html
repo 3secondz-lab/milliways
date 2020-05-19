@@ -44,7 +44,6 @@
         list_serv.forEach(function (item, index, array){
           // Convert service name to topic name
           var name = item.substring(0, item.length - '/set_parameters'.length) + '/parameter_descriptions'
-
           // Get parameter configuration topic
           var sub = new ROSLIB.Topic({
             ros: ros,
@@ -115,7 +114,6 @@
                 listObj = {};
               }
             })
-
             //console.log('\n');
             sub.unsubscribe();
             //console.log(apiForm);
