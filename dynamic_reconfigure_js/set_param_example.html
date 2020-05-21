@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <script type="text/javascript" src="eventemitter2.js"></script>
+  <script type="text/javascript" src="roslib.js"></script>
+  <script src="yaml.min.js"></script>
+
+  <script type="text/javascript" type="text/javascript">
+    var ros = new ROSLIB.Ros({
+      url: 'ws://localhost:9090'
+    });
+  </script>
+</head>
+
+<body>
+
+  ROS Javascript dynamic_reconfigure simple parameter set example <br>
+  Jinsun Park <br>
+  (zzangjinsun@3secondz.com) <br><br>
+
+  1. webviz_test pkg가 업데이트 되었으므로, <a href="../webviz_test/README.md">ROS Dynamic Parameter Configuration Tutorial</a> 을 참고하여 catkin_make install (또는 catkin build) 를 통해 다시 빌드 후 실행해야 한다. <br>
+  2. ROS API를 통해 Parameter를 변경한다. <br>
+  3. Dynamic_reconfigure의 set_parameters service를 이용한다. <br>
+  4. webviz_test_server를 실행중인 터미널에 결과가 출력되면 정상적으로 작동. (그림 참조) <br><br>
+
+  <img src='reconf_response.png' alt='reconf_response'>
+
+  <script type="text/javascript">
+    var node_name = '/webviz_test_server'
+    var serv_name = node_name + '/set_parameters'
+
+    // Define a message containing desired parameters
+    var config_msg = new ROSLIB.Message(
+      {
+        bools: [
+          {name: 'flag', value: false}
+        ],
+        ints: [
+          // enum is included in the ints
+          {name: 'size', value: 3},
+          {name: 'int', value: 100}
+        ],
+        strs: [
+          {name: 'name', value: 'modified_parameters'}
+        ],
+        doubles: [
+        {name: 'amplitude', value: 100},
+        {name: 'freq', value: 50},
+        {name: 'phase', value: 1.5}
+        ]
+      }
+    )
+
+    // Create a service request
+    var config_req = new ROSLIB.ServiceRequest({
+      config: config_msg
+    })
+
+    // Create a service
+    var config_serv = new ROSLIB.Service({
+      ros: ros,
+      name: serv_name,
+      serviceType: 'dynamic_reconfigure/Reconfigure'
+    })
+
+    config_serv.callService(config_req, function(result){
+      console.log('Reconfigured parameters of ' + node_name + ' : ')
+      console.log(result)
+    },
+    function(result){
+      console.log('Failed to reconfigure')
+    })
+
+  </script>
+</body>
+
+</html>
