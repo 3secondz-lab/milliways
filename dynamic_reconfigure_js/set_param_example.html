@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <script type="text/javascript" src="eventemitter2.js"></script>
+  <script type="text/javascript" src="roslib.js"></script>
+  <script src="yaml.min.js"></script>
+
+  <script type="text/javascript" type="text/javascript">
+    var ros = new ROSLIB.Ros({
+      url: 'ws://localhost:9090'
+    });
+  </script>
+</head>
+
+<body>
+
+  ROS Javascript dynamic_reconfigure simple parameter set example <br>
+  Jinsun Park <br>
+  (zzangjinsun@3secondz.com) <br><br>
+
+  1. <a href="../WEBVIZ_INSTALL.md">ROS-Webviz Tutorial</a> 을 참고하여 ROS Websocket server 를 실행한다. <br>
+  2. <a href="../webviz_test/README.md">ROS Dynamic Parameter Configuration Tutorial</a> 을 참고하여 webviz_test_server 를 실행한다. <br>
+  3. Web Console을 통해 Output을 확인한다. Output은 현재 ros에서 dynamic_reconfigure가 가능한 Node 및 해당 Node의 Parameter name, type, min, max value 등을 출력한다 <br>
+  4. 문자열, 숫자 뿐 아니라 Enum type 까지 전부 확인 가능하므로, 해당 정보를 이용해 Panel 을 구성 할 수 있을 것이다. <br><br>
+  5. ROS API를 통해 Parameter를 변경한다.
+
+  <script type="text/javascript">
+    // ROS API to get list of services
+    ros.getServices(
+      // Success
+      function(services) {
+        // Get dynamic_reconfigurable nodes
+        var list_serv = services.filter(serv => serv.endsWith('/set_parameters'))
+
+        // Get parameter information for each node
+        list_serv.forEach(function (item, index, array){
+          // Convert service name to topic name
+          var node_name = item
+          var name = item.substring(0, item.length - '/set_parameters'.length) + '/parameter_descriptions'
+
+          // Get parameter configuration topic
+          var sub = new ROSLIB.Topic({
+            ros: ros,
+            name: name,
+            messageType: 'dynamic_reconfigure/ConfigDescription'
+          })
+
+          // Parse configuration
+          sub.subscribe(function (message){
+            console.log('Node : ' + name)
+
+            // TODO : Check multiple groups possibility
+            message['groups'][0]['parameters'].forEach(function (item, index, array){
+              var name_param = item.name;
+              var name = item.name;
+              var type = item.type;
+              var level = item.level;
+              var desc = item.description;
+              var edit_method = item.edit_method;
+
+              console.log('Name : ' + name + ', Type : ' + type + ', Level : ' + level + ', Desc : ' + desc)
+
+              if (edit_method){
+                // For enum type parameter
+                var edit_method_parsed = YAML.parse(edit_method);
+
+                var enum_desc = edit_method_parsed.enum_description
+
+                console.log('Enum Desc : ' + enum_desc)
+                
+                var enum_val = edit_method_parsed.enum
+                console.log('Number of enum values : ' + enum_val.length)
+
+                enum_val.forEach(function (item, index, array){
+                  var name = item.name
+                  var type = item.type
+                  var value = item.value
+                  var desc = item.description
+
+                  console.log('Name : ' + name + ', Type : ' + type + ', Value : ' + value + ', Desc : ' + desc)
+
+                  // // Set parameter
+                  // console.log('Value : ' + value + ' -> ' + (value + 1))
+                  // var config_msg = new ROSLIB.Message(
+                  //   {
+                  //     ints: [
+                  //       {name: name_param},
+                  //       {value: value + 1}
+                  //     ],
+                  //   }
+                  // )
+
+                  // var config_req = new ROSLIB.ServiceRequest({
+                  //   config: config_msg
+                  // })
+
+                  // var serv_set = new ROSLIB.Service({
+                  //   ros: ros,
+                  //   name: node_name,
+                  //   serviceType: 'dynamic_reconfigure/Reconfigure'
+                  // })
+
+                  // console.log(serv_set)
+
+                  // serv_set.callService(config_req, function(result){
+                  //   console.log('Reconfigured : ' + name_param)
+                  // },
+                  // function(result){
+                  //   console.log('Failed : ' + name_param)
+                  // })
+                  
+                })
+              }else{
+                // For other types
+                var val_max = message['max'][type + 's'].filter(val => val['name'] == name)[0].value
+                var val_min = message['min'][type + 's'].filter(val => val['name'] == name)[0].value
+                var val_dflt = message['dflt'][type + 's'].filter(val => val['name'] == name)[0].value
+
+                // TODO : Inf / -Inf values are not parsed correctly (from ROS side)
+                if(val_max == null){
+                  val_max = Infinity
+                }
+
+                if(val_min == null){
+                  val_min = -Infinity
+                }
+
+                console.log('Max : ' + val_max + ', Min : ' + val_min + ', Default : ' + val_dflt)
+
+                var name = item.name
+                var type = item.type
+                var value = item.value
+                var desc = item.description
+
+                console.log('Name : ' + name + ', Type : ' + type + ', Value : ' + value + ', Desc : ' + desc)
+
+                // Set parameter
+                if(name == 'amplitude'){
+                  var value_new = val_dflt*10
+                  console.log(value_new)
+
+                  var config_msg = new ROSLIB.Message(
+                    {
+                      doubles: [
+                        {name: 'amplitude', value: 0.5},
+                        {name: 'phase', value: 0.7},
+                      ],
+                    }
+                  )
+
+                  var config_req = new ROSLIB.ServiceRequest({
+                    config: config_msg
+                  })
+
+                  var serv_set = new ROSLIB.Service({
+                    ros: ros,
+                    name: node_name,
+                    serviceType: 'dynamic_reconfigure/Reconfigure'
+                  })
+
+                  console.log(serv_set)
+
+                  serv_set.callService(config_req, function(result){
+                    console.log(result)
+                    console.log('Reconfigured : ' + name_param)
+                  },
+                  function(result){
+                    console.log('Failed : ' + name_param)
+                  })
+                }
+              }
+            })
+
+            console.log('\n')
+            sub.unsubscribe()
+          })
+        })
+        
+      },
+      // Failure
+      function(services) {
+        console.log('Failed to get services : ' + services)
+      }
+    )
+  </script>
+</body>
+
+</html>
