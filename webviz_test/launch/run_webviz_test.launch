@@ -1,0 +1,15 @@
+<launch>
+
+  <arg name="bag_file" default="/3secDev/milliways/data/sample.bag" />
+
+  <!-- Rosbridge server -->
+  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" />
+
+  <!-- Rosbag play -->
+  <node name="play" pkg="rosbag" type="play" args="$(arg bag_file) -l" />
+
+  <!-- webviz_test_server -->
+  <node name="webviz_test_server" pkg="webviz_test" type="webviz_test_server.py" />
+
+</launch>
+
